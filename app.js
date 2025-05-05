@@ -5,20 +5,29 @@ function sortear() {
     let numerosSorteados = [];
     let numero;
 
-    for (let i = 0; i < quantidade; i++) {
-        numero = gerarNumeroAleatorio(inicio, fim);
+    if (inicio > fim) {
+        alert('Valor inicial deve ser menor que o valor final')
+    } else if (quantidade > (fim - inicio)) {
+        alert("Quantidades de numeros solicitados é maior que o intervalo entre número inicial e final")
+    } else {
 
-        while (numerosSorteados.includes(numero)) {
+
+        for (let i = 0; i < quantidade; i++) {
             numero = gerarNumeroAleatorio(inicio, fim);
+
+            while (numerosSorteados.includes(numero)) {
+                numero = gerarNumeroAleatorio(inicio, fim);
+            }
+
+            numerosSorteados.push(numero);
+            alterarStatusDoBotao();
         }
 
-        numerosSorteados.push(numero);
-        alterarStatusDoBotao();
+        let resultado = document.getElementById("resultado");
+        resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${numerosSorteados}</label>`;
     }
-
-    let resultado = document.getElementById("resultado");
-    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${numerosSorteados}</label>`;
 }
+
 
 function gerarNumeroAleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
